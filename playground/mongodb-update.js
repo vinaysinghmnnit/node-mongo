@@ -6,12 +6,24 @@ MongoClient.connect('mongodb://localhost:27017/localhost',(err,db) => {
   }
   console.log('Connected to Mongodb server');
   const DB=db.db('localhost');
-  DB.collection('login').find({password:"pandit"}).toArray().then((docs)=>{
-    console.log('localhost');
-    console.log(JSON.stringify(docs,undefined,2));
-  },(err)=>{
-    console.log('Unable to fetch localhost',err);
-  });
+  DB.collection('login').findOneAndUpdate(
+    {
+    _id: '5aa9fcccd88b5bb289e53c5d'
+   },
+   {
+    $set:{
+      username:'vinay'
+        },
+  },
+  {
+      returnOriginal:false
+  })
+  .then(
+    (result)=>{
+    if(result)
+    console.log(result);
+  }
+)
 
   db.close();
 });
